@@ -1,0 +1,23 @@
+record(ai, "tank1")
+{
+    field(DESC, "water level in tank1")
+}
+
+record(ai, "tank2")
+{
+    field(DESC, "water level in tank2")
+}
+
+record(ai, "tank3")
+{
+    field(DESC, "water level in tank3")
+}
+
+record(ai, "tank4")
+{
+    field(DESC, "water level in tank4")
+}
+record(ai, "tank5")
+{
+    field(DESC, "water level in tank5")
+}
