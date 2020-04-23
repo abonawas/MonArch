@@ -1,0 +1,20 @@
+version: '3'
+services:
+    archappl:
+        build:
+            context: ./QuickArchiverAppliance
+        ports:
+            - "17665:17665"
+    tanks:
+        build:
+            context: ./TestIOCs
+    fill_tanks:
+        build:
+            context: ./UpdateIOCs
+
+    archive_iocs:
+        build:
+            context: ./ArchiveIOCs
+        # links:
+        #     - "archappl:archappl"
+
