@@ -1,6 +1,6 @@
 #  MonArch (Monitoring The EPICS Archiver Appliance)
 For now this repository is a test bed for developing a monitoring system for the EPICS Archiver Appliance.
-## Set up
+## Set Up
 Docker compose is being used to automate the set-up of an EPICS development environment.
 
 Before running `docker-compose` the epics-base image must be built first.
