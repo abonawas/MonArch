@@ -21,3 +21,9 @@ services:
             context: ./Prometheus
         ports:
             - "9090:9090"
+    grafana:
+        build:
+            context: ./Grafana
+        ports:
+            - "3000:3000"
+
