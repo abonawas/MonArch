@@ -15,6 +15,9 @@ services:
     archive_iocs:
         build:
             context: ./ArchiveIOCs
-        # links:
-        #     - "archappl:archappl"
 
+    prometheus:
+        build:
+            context: ./Prometheus
+        ports:
+            - "9090:9090"
