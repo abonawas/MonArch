@@ -21,6 +21,8 @@ services:
             context: ./Prometheus
         ports:
             - "9090:9090"
+        volumes: 
+            - $PWD/Prometheus/prometheus.yml:/prometheus-2.18.0/prometheus.yml
     grafana:
         build:
             context: ./Grafana
