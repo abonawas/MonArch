@@ -5,6 +5,7 @@ services:
             context: ./QuickArchiverAppliance
         ports:
             - "17665:17665"
+            - "9100:9100"
     tanks:
         build:
             context: ./TestIOCs
