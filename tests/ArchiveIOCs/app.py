@@ -22,7 +22,9 @@ def print_not_good():
 for i in range(100):
     try:
         res = requests.get(
-            "http://archappl:17665/mgmt/bpl/archivePV?pv=tank1,tank2,tank3,tank4,tank5,tank6&samplingperiod=1&samplingmethod=MONITOR"
+            "http://archappl:17665/mgmt/bpl/archivePV?"
+            "pv=tank1,tank2,tank3,tank4,tank5,tank6&"
+            "samplingperiod=1&samplingmethod=MONITOR"
         )
         res.raise_for_status()
         print_all_good()

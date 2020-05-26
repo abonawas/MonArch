@@ -8,6 +8,9 @@ RUN mv /prometheus-2.18.0* /prometheus-2.18.0
 # WORKDIR /prometheus-2.18.0
 copy ./prometheus.yml /prometheus-2.18.0/prometheus.yml
 
+# ENV HTTP_PROXY "127.0.0.1:9091"
+# ENV HTTPS_PROXY "127.0.0.1:9091"
+
 EXPOSE 9090
 ENTRYPOINT ["/sbin/tini", "/prometheus-2.18.0/prometheus", "--config.file=/prometheus-2.18.0/prometheus.yml"]
 
