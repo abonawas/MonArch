@@ -1,0 +1,71 @@
+rbac:
+  create: false
+ 
+podSecurityPolicy:
+  enabled: false
+ 
+# serviceAccounts:
+#   alertmanager:
+#     create: false
+#     name: default
+#     annotations: {}
+#   nodeExporter:
+#     create: false
+#     name: default
+#     annotations: {}
+#   pushgateway:
+#     create: false
+#     name: default
+#     annotations: {}
+#   server:
+#     create: false
+#     name: default
+#     annotations: {}
+
+pushgateway:
+  enabled: false
+ 
+nodeExporter:
+  enabled: false
+ 
+kubeStateMetrics:
+  enabled: false 
+
+alertmanager:
+  ingress:
+    enabled: true
+    path: "/"
+    hosts:
+      - archappl-alertmanager.diamond.ac.uk
+    tls:
+    - hosts:
+      - archappl-alertmanager.diamond.ac.uk
+ 
+server:
+  retention: "7d" # change to the length of time you want to keep stuff for
+  ingress:
+    enabled: true
+    path: "/"
+    hosts:
+      - archappl-prometheus.diamond.ac.uk
+    tls:
+    - hosts:
+      - archappl-prometheus.diamond.ac.uk
+ 
+extraScrapeConfigs: |
+  - job_name: 'archappl-node-exporter'
+    metrics_path: /metrics
+    static_configs:
+      - targets: 
+        # test
+        - 'cs03r-cs-serv-47.diamond.ac.uk:9200'
+        # primary 
+        - 'cs03r-cs-serv-54.pri.diamond.ac.uk:9200'
+        - 'cs03r-cs-serv-55.pri.diamond.ac.uk:9200'
+        - 'cs03r-cs-serv-56.pri.diamond.ac.uk:9200'
+        # standby
+        - 'cs03r-cs-serv-60.pri.diamond.ac.uk:9200'
+        - 'cs03r-cs-serv-61.pri.diamond.ac.uk:9200'
+        - 'cs03r-cs-serv-62.pri.diamond.ac.uk:9200'
+
+
