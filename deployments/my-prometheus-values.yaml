@@ -4,23 +4,23 @@ rbac:
 podSecurityPolicy:
   enabled: false
  
-# serviceAccounts:
-#   alertmanager:
-#     create: false
-#     name: default
-#     annotations: {}
-#   nodeExporter:
-#     create: false
-#     name: default
-#     annotations: {}
-#   pushgateway:
-#     create: false
-#     name: default
-#     annotations: {}
-#   server:
-#     create: false
-#     name: default
-#     annotations: {}
+serviceAccounts:
+  alertmanager:
+    create: false
+    name: default
+    annotations: {}
+  nodeExporter:
+    create: false
+    name: default
+    annotations: {}
+  pushgateway:
+    create: false
+    name: default
+    annotations: {}
+  server:
+    create: false
+    name: default
+    annotations: {}
 
 pushgateway:
   enabled: false
@@ -53,7 +53,7 @@ server:
       - archappl-prometheus.diamond.ac.uk
  
 extraScrapeConfigs: |
-  - job_name: 'archappl-node-exporter'
+  - job_name: 'node'
     metrics_path: /metrics
     static_configs:
       - targets: 
@@ -68,4 +68,8 @@ extraScrapeConfigs: |
         - 'cs03r-cs-serv-61.pri.diamond.ac.uk:9200'
         - 'cs03r-cs-serv-62.pri.diamond.ac.uk:9200'
 
-
+  - job_name: 'grafana'
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - 'archappl-grafana.diamond.ac.uk'

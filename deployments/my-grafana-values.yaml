@@ -1,0 +1,17 @@
+rbac:
+  create: false
+  pspEnabled: false
+  pspUseAppArmor: false
+ 
+serviceAccount:
+  create: false
+  name: default
+ 
+ingress:
+  enabled: true
+  path: "/"
+  hosts:
+    - archappl-grafana.diamond.ac.uk
+  tls:
+  - hosts:
+    - archappl-grafana.diamond.ac.uk
