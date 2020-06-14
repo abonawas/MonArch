@@ -51,14 +51,32 @@ server:
     tls:
     - hosts:
       - archappl-prometheus.diamond.ac.uk
+
+
+
+serverFiles:
+  prometheus.yml:
+    scrape_configs:
+    - job_name: prometheus
+      static_configs:
+      - targets:
+        - 'localhost:9090'
+
  
 extraScrapeConfigs: |
+  - job_name: 'grafana'
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+        - 'archappl-grafana.diamond.ac.uk'
+
   - job_name: 'node'
     metrics_path: /metrics
     static_configs:
+
       - targets: 
         # test
-        - 'cs03r-cs-serv-47.diamond.ac.uk:9200'
+        - 'cs03r-cs-serv-47.diamond.ac.uk:9100'
         # primary 
         - 'cs03r-cs-serv-54.pri.diamond.ac.uk:9200'
         - 'cs03r-cs-serv-55.pri.diamond.ac.uk:9200'
@@ -68,8 +86,90 @@ extraScrapeConfigs: |
         - 'cs03r-cs-serv-61.pri.diamond.ac.uk:9200'
         - 'cs03r-cs-serv-62.pri.diamond.ac.uk:9200'
 
-  - job_name: 'grafana'
+  - job_name: 'blackbox'
     metrics_path: /metrics
     static_configs:
-      - targets:
-        - 'archappl-grafana.diamond.ac.uk'
+    - targets: ['archappl-blackbox.diamond.ac.uk']
+
+  - job_name: 'probe'
+    metrics_path: /probe
+    params: 
+      module: [http_2xx]
+    static_configs:
+    - targets:
+      - 'cs03r-cs-serv-47.diamond.ac.uk/mgmt/ui/index.html'
+      # primary 
+      - 'cs03r-cs-serv-54.pri.diamond.ac.uk/mgmt/ui/index.html'
+      - 'cs03r-cs-serv-55.pri.diamond.ac.uk/mgmt/ui/index.html'
+      - 'cs03r-cs-serv-56.pri.diamond.ac.uk/mgmt/ui/index.html'
+      # standby
+      - 'cs03r-cs-serv-60.pri.diamond.ac.uk/mgmt/ui/index.html'
+      - 'cs03r-cs-serv-61.pri.diamond.ac.uk/mgmt/ui/index.html'
+      - 'cs03r-cs-serv-62.pri.diamond.ac.uk/mgmt/ui/index.html'
+      labels:
+        prober: http
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: target
+    - target_label: __address__
+      replacement: 'archappl-blackbox.diamond.ac.uk' # The blackbox exporter.
+
+  - job_name: 'icmp_probe'
+    metrics_path: /probe
+    params: 
+      module: [icmp]
+    static_configs:
+    - targets:
+      - 'cs03r-cs-serv-47.diamond.ac.uk'
+      # primary 
+      - 'cs03r-cs-serv-54.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-55.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-56.pri.diamond.ac.uk'
+      # standby
+      - 'cs03r-cs-serv-60.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-61.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-62.pri.diamond.ac.uk'
+      labels:
+        prober: icmp
+
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: target
+    - target_label: __address__
+      replacement: 'archappl-blackbox.diamond.ac.uk' # The blackbox exporter.
+
+    - replacement: 'probe'
+      target_label: job
+      
+  - job_name: 'aa-exporter'
+    metrics_path: /metrics
+    static_configs:
+    - targets: ['aa-exporter.diamond.ac.uk']
+
+  - job_name: 'scrape'
+    metrics_path: /scrape
+    static_configs:
+    - targets:
+      - 'cs03r-cs-serv-47.diamond.ac.uk'
+      # primary 
+      - 'cs03r-cs-serv-54.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-55.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-56.pri.diamond.ac.uk'
+      # standby
+      - 'cs03r-cs-serv-60.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-61.pri.diamond.ac.uk'
+      - 'cs03r-cs-serv-62.pri.diamond.ac.uk'
+
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: target
+    - target_label: __address__
+      replacement: 'aa-exporter.diamond.ac.uk' # The aa_exporter
+
+

@@ -8,7 +8,7 @@ RUN curl -LO https://github.com/slacmshankar/epicsarchiverap/releases/download/v
 
 RUN tar -zxvf archappl*
 
-RUN curl -LO http://mirror.vorboss.net/apache/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
+RUN curl -LO https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
 RUN mv apache-tomcat* apache-tomcat.tar.gz
 
 RUN curl -LO https://github.com/prometheus/node_exporter/releases/download/v1.0.0-rc.0/node_exporter-1.0.0-rc.0.linux-amd64.tar.gz
